@@ -1,0 +1,12 @@
+<%- include inc/header %>
+<div class="main">
+    <ul>
+    <% for(var p=0; p<post.length; p++){ %>
+        <li>
+            <a href="/list/<%=post[p].id %>"><%= post[p].title %></a>
+            <span><%= post[p].time %></span>
+        </li>
+    <% } %>
+    </ul>
+</div>
+<%- include inc/footer%>
