@@ -1,9 +1,12 @@
 <aside>
+    <% if(locals.user) { %>
+    <span><%= locals.user.name %></span>
+    <% } %>
     <nav>
         <ul>
             <li><a href="/">HOME</a></li>
             <li><a href="/list">LIST</a></li>
-            <% if(login) { %>
+            <% if(locals.user) { %>
             <li><a href="/post">POST</a></li>
             <li><a href="/logout">LOGOUT</a></li>
             <% }else{ %>
