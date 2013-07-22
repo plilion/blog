@@ -13,14 +13,12 @@ module.exports = function(app){
             error:req.flash('error').toString()
         });
     });
+    app.get('/login',checkNotLogin);
     app.get('/login',function(req,res){
         res.render('login',{title:'登录',login:false});
     });
-    app.get('/logout',function(req,res){
-        req.session.user = null;
-        req.flash('success','登出成功');
-        res.redirect('/');
-    });
+
+    app.post('/login',checkNotLogin);
     app.post('/login',function(req,res){
         var md5 = crypto.createHash('md5'),
             name = req.body.name,
@@ -48,6 +46,13 @@ module.exports = function(app){
             res.redirect('/');
         });
     });
+    app.get('/logout',checkLogin);
+    app.get('/logout',function(req,res){
+        req.session.user = null;
+        req.flash('success','登出成功');
+        res.redirect('/');
+    });
+    app.get('/reg',checkNotLogin);
     app.get('/reg',function(req,res){
         res.render('reg',{
             title:'注册',
@@ -56,6 +61,7 @@ module.exports = function(app){
             error:req.flash('error').toString()
         });
     });
+    app.post('/reg',checkNotLogin);
     app.post('/reg',function(req,res){
         var name = req.body.name,
             password = req.body.password,
@@ -91,14 +97,30 @@ module.exports = function(app){
         });
     })
     app.get('/list/:id?',function(req,res){
-        res.render('list',{title:'文章列表',login:false,post:[
+        res.render('list',{title:'文章列表',post:[
             {id:1,title:'First Post',time:new Date().toString()}
         ]});
     });
+    app.get('/post',checkLogin);
     app.get('/post',function(req,res){
-        res.render('post',{title:'发表',login:true});
+        res.render('post',{title:'发表'});
     });
+    app.post('/post',checkLogin);
     app.post('/post',function(req,res){
 
     });
+    function checkLogin(req,res,next){
+        if(!req.session.user){
+            req.flash('error','未登录');
+            res.redirect('/login');
+        }
+        next();
+    }
+    function checkNotLogin(req,res,next){
+        if(req.session.user){
+            req.flash('error','已登录');
+            res.redirect('/');
+        }
+        next();
+    }
 }
