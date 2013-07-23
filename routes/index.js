@@ -3,15 +3,42 @@
  * GET home page.
  */
 var crypto = require('crypto'),
-    User = require('../models/user');
+    User = require('../models/user'),
+    Post = require('../models/post');
 module.exports = function(app){
     app.get('/',function(req, res){
-        res.render('index',{
-            title: '首页',
-            user:req.session.user,
-            success:req.flash('success').toString(),
-            error:req.flash('error').toString()
+        Post.getAll(null,function(err,posts){
+            if(err){
+                posts = [];
+            }
+            res.render('index',{
+                title: '首页',
+                user:req.session.user,
+                success:req.flash('success').toString(),
+                error:req.flash('error').toString(),
+                posts:posts
+            })
         });
+    });
+    app.get('/u/:name',function(req,res){
+         User.get(req.params.name,function(err,user){
+             if(!user){
+                 req.flash('error','用户不存在');
+                 req.redirect('/');
+             }
+             Post.getAll(user.name,function(err,posts){
+                 if(err){
+                     posts = [];
+                 }
+                 res.render('user',{
+                     title:user.name+'`s文章',
+                     user:req.session.user,
+                     success:req.flash('success').toString(),
+                     error:req.flash('error').toString(),
+                     posts:posts
+                 });
+             });
+         });
     });
     app.get('/login',checkNotLogin);
     app.get('/login',function(req,res){
@@ -39,7 +66,7 @@ module.exports = function(app){
             }
             if(user.password != password){
                 req.flash('error','密码错误');
-                return req.redirect('/login');
+                return res.redirect('/login');
             }
             req.session.user = user;
             req.flash('success','登陆成功');
@@ -107,7 +134,17 @@ module.exports = function(app){
     });
     app.post('/post',checkLogin);
     app.post('/post',function(req,res){
+        var user = req.session.user,
+            post = new Post(req.body.name||user.name,req.body.title,req.body.post);
+        post.save(function(err){
+            if(err){
+                req.flash('error',err);
+                return res.redirect('/post');
+            }
+            req.flash('success','发布成功');
+            res.redirect('/');
 
+        });
     });
     function checkLogin(req,res,next){
         if(!req.session.user){
