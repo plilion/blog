@@ -2,13 +2,16 @@
     <div class="main">
         <%- include inc/info %>
         <h1><%= title %></h1>
-        <% posts.forEach(function(post,index){ %>
+        <%- include inc/page %>
+        <% posts.forEach(function(post){ %>
         <article>
             <header>
-                <h2><%= post.title %></h2>
+                <h2><a href="/u/<%= post.name%>/<%= post.time.day%>/<%= post.title %>"><%= post.title %></a></h2>
                 <p>
                     作者:<span><%= post.name%></span>
                     日期: <span><%= post.time.minute %></span>
+                    标签:
+                    <%- include inc/showtags%>
                 </p>
             </header>
             <section>

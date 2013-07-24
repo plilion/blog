@@ -1,20 +1,20 @@
 <%- include inc/header %>
 <div class="main">
     <%- include inc/info %>
-    <% posts.forEach(function(post,index){ %>
     <article>
         <header>
-            <h2><a href="/u/<%= post.name%>/<%= post.time.day%>/<%= post.title %>"><%= post.title %></a></h2>
             <p>
-                作者:<span></span>
+                作者:<span><%= post.name%></span>
                 日期: <span><%= post.time.minute %></span>
-                <%- include inc/showtags%>
             </p>
         </header>
         <section>
             <%- post.post%>
         </section>
+        <footer>
+            <%- include inc/showtags%>
+        </footer>
     </article>
-    <% }) %>
+    <%- include inc/comment %>
 </div>
-<%- include inc/footer%>
+<%- include inc/footer %>

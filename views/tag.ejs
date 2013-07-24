@@ -1,0 +1,12 @@
+<%- include inc/header %>
+<div class="main">
+    <%- include inc/info %>
+    <ul>
+        <% posts.forEach(function(post){ %>
+
+        <a href="/u/<%= post.name%>/<%= post.time.day%>/<%= post.title %>"><%= post.title %></a><br>
+
+        <% })%>
+    </ul>
+</div>
+<%- include inc/footer%>

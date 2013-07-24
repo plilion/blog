@@ -1,0 +1,6 @@
+标签:
+<% post.tags.forEach(function(tag){ %>
+<% if(tag.tag){ %>
+<a href="/tags/<%= tag.tag%>"><%= tag.tag%></a>
+<% } %>
+<% })%>

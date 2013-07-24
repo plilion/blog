@@ -1,0 +1,13 @@
+<div class="page">
+     <% if(!isFirstPage){ %>
+    <a href="?p=<%= page-1 %>">上一页</a>
+    <% }else{ %>
+    <span>上一页</span>
+    <% } %>
+    <%= page%>/<%= total%>
+    <% if(!isLastPage){ %>
+    <a href="?p=<%= page+1 %>">下一页</a>
+    <% }else{ %>
+    <span>下一页</span>
+    <% } %>
+</div>
