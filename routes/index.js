@@ -125,6 +125,19 @@ module.exports = function(app){
             res.redirect('back');
         });
     });
+    app.post('/search',function(req,res){
+        Post.search(req.body.keyword,function(err,posts){
+            if(err){
+                posts = [];
+            }
+            res.render('search',{
+                title:'Search:'+req.body.keyword,
+                user:req.session.user,
+                posts:posts
+            });
+        });
+    });
+
     app.get('/login',checkNotLogin);
     app.get('/login',function(req,res){
         res.render('login',{title:'登录',login:false});
@@ -228,6 +241,10 @@ module.exports = function(app){
             res.redirect('/');
 
         });
+    });
+
+    app.get('*',function(req,res){
+        res.render('404');
     });
     function checkLogin(req,res,next){
         if(!req.session.user){

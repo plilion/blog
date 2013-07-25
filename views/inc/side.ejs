@@ -4,7 +4,6 @@
     <nav>
         <ul>
             <li><a href="/">HOME</a></li>
-            <li><a href="/list">LIST</a></li>
             <% if(locals.user) { %>
             <li><a href="/post">POST</a></li>
             <li><a href="/logout">LOGOUT</a></li>
@@ -16,4 +15,8 @@
             <li><a href="/tags">TAG</a></li>
         </ul>
     </nav>
+    <form action="search" method="post" >
+        <input type="text" name="keyword" placeholder="SEARCH" />
+        <input value="搜索" type="submit"/>
+    </form>
 </aside>

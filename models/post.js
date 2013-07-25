@@ -190,7 +190,31 @@ Post.getOne = function(name,title,day,callback){
                    });
                }
                callback(err,doc);
+            })
+            collection.update({'name':name,'title':title,'time.day':day},{$inc:{'pv':1}});
+        });
+    });
+}
+Post.search = function(keyword,callback){
+
+    mongodb.open(function(err,db){
+        if(err){
+            return callback(err)
+        }
+        db.collection('posts',function(err,collection){
+            if(err){
+                mongodb.close();
+                return callback(err);
+            }
+            var pattern = new RegExp('^.*'+keyword+'.*$','i');
+            collection.find({title:pattern},{name:1,title:1,time:1}).sort({time:1}).toArray(function(err,posts){
+                mongodb.close();
+               if(err){
+                   return callback(err,null);
+               }
+                callback(null,posts);
             });
         });
+
     });
 }
