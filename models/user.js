@@ -12,34 +12,33 @@ User.prototype.save = function(callback){
         password:this.password,
         email:this.email
     };
-    mongodb.open(function(err,db){
+    mongodb(function(err,db){
         if(err){
             return callback(err);
         }
         db.collection('user',function(err,collection){
             if(err){
-                mongodb.close();
                 return callback(err);
             }
             collection.insert(user,{safe:true},function(err,user){
-               mongodb.close();
+               
                 callback(err,user);
             });
         });
     });
 }
 User.get = function(name,callback){
-    mongodb.open(function(err,db){
+    mongodb(function(err,db){
         if(err){
             return callback(err);
         }
         db.collection('user',function(err,collection){
            if(err){
-               mongodb.close();
+
                return callback(err);
            }
             collection.findOne({name:name},function(err,doc){
-                mongodb.close();
+
                 if(doc){
                    var user = new User(doc);
                     callback(err,user);

@@ -28,11 +28,12 @@ app.use(express.session({
     key:settings.db,
 
     store:new MongoServer({
-      db:settings.db
+      url:settings.dburl
     })
 }));
-app.use(app.router);
+
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(app.router);
 
 // development only
 if ('development' == app.get('env')) {
