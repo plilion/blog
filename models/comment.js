@@ -18,17 +18,15 @@ Comment.prototype.save = function(callback){
         day = this.day,
         title = this.title,
         comment = this.comment;
-    mongodb.open(function(err,db){
+    mongodb(function(err,db){
         if(err){
             return callback(err);
         }
         db.collection('posts',function(err,collection){
             if(err){
-                mongodb.close();
                 return callback(err);
             }
             collection.findAndModify({'name':name,'time.day':day,'title':title},[['time',-1]],{$push:{'comments':comment}},{'new':true},function(err,comment){
-                mongodb.close();
                 callback(err || null);
             });
         });

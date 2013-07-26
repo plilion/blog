@@ -7,6 +7,5 @@ module.exports = {
     cookieSecret:'myblog',
     db:'blog',
     host:'localhost',
-    username:'zxczhangyuting',
-    password:'zxczxc_123'
+    dburl:'mongodb://eastory:zxczxc_123@ds031108.mongolab.com:31108/blog'
 }
