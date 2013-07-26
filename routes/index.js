@@ -5,7 +5,7 @@
 var crypto = require('crypto'),
     User = require('../models/user'),
     Post = require('../models/post'),
-    Comment = require('../models/Comment');
+    Comment = require('../models/comment');
 module.exports = function(app){
     app.get('/',function(req, res){
         var page = req.query.p?parseInt(req.query.p,10):1;
@@ -195,10 +195,10 @@ module.exports = function(app){
             req.flash('error','两次输入密码不一致!');
             return res.redirect('/reg');
         }
-        var md5 = crypto.createHash('md5'),
-            password = md5.update(req.body.password).digest('hex');
+        var md5 = crypto.createHash('md5');
+            password = md5.update(password).digest('hex');
         var newUser = new User({
-            name:req.body.name,
+            name:name,
             password:password,
             email:req.body.email
         });
