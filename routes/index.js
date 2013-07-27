@@ -243,6 +243,30 @@ module.exports = function(app){
         });
     });
 
+    app.get('/edit',checkLogin);
+    app.get('/edit',function(req,res){
+        var name = req.params.name,
+            day = req.params.day,
+            title = req.params.title;
+        Post.edit(name,day,title,function(err,doc){
+            if(err){
+                req.flash('error',err)
+                return res.redirect('back');
+            }
+            res.render('edit',{
+                user:req.session.user,
+                error:req.flash('error'),
+                post:doc
+            });
+        });
+    });
+    app.post('/edit',checkLogin);
+    app.post('/edit',function(req,res){
+
+    });
+    app.get('/template',function(req,res){
+       res.render('template');
+    });
     app.get('*',function(req,res){
         res.render('404');
     });

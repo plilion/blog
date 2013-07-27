@@ -1,13 +1,21 @@
-<div class="page">
+<div>
+    <ul class="pagination clearfix">
+
+    <% if(total == 0){total = 1} %>
      <% if(!isFirstPage){ %>
-    <a href="?p=<%= page-1 %>">上一页</a>
-    <% }else{ %>
-    <span>上一页</span>
+    <li><a href="?p=<%= 1 %>" class="extra"><<</a></li>
+    <li><a href="?p=<%= page-1 %>" class="extra"><</a></li>
     <% } %>
-    <%= page%>/<%= total%>
+    <% for(var i = 1; i <= total; i++){ %>
+        <% if(i == page){ %>
+        <li><span><%= i %></span></li>
+        <% }else{ %>
+        <li><a href="?p=<%= i %>" ><%= i %></a></li>
+        <% } %>
+    <% } %>
     <% if(!isLastPage){ %>
-    <a href="?p=<%= page+1 %>">下一页</a>
-    <% }else{ %>
-    <span>下一页</span>
-    <% } %>
+    <li><a href="?p=<%= page+1 %>" class="extra">></a></li>
+    <li><a href="?p=<%= total %>" class="extra">>></a></li>
+    <% }%>
+    </ul>
 </div>

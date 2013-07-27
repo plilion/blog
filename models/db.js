@@ -8,11 +8,21 @@ var settings =  require('../settings'),
     Connection = require('mongodb').Connection,
     Server = require('mongodb').Server;
 //module.exports = new Db(settings.db,new Server(settings.host,Connection.DEFAULT_PORT,{}));
-module.exports = function(callback){
+/**
+ * @string table
+ * @function callback
+ */
+module.exports = function(table,callback){
     Db.connect(settings.dburl,function(err,connect){
           if(err){
               return callback(err);
           }
-        callback(err,connect);
+        connect.collection(table,function(err,collection){
+            if(err){
+                return callback(err);
+            }
+            callback(err,collection);
+        });
+
     });
 }

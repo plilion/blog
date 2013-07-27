@@ -1,10 +1,12 @@
 <%- include inc/header %>
-<div class="main">
-    <%- include inc/info %>
-    <ul>
-    <% posts.forEach(function(post,index){ %>
-    <li><a href="/u/<%= post.name%>/<%= post.time.day%>/<%= post.title %>"><%= post.title %></a></li>
-    <% }) %>
-    </ul>
+<div id="content" class="layout">
+    <div class="col-main">
+        <ul>
+            <% posts.forEach(function(post,index){ %>
+            <li><a href="/u/<%= post.name%>/<%= post.time.day%>/<%= post.title %>"><%= post.title %></a></li>
+            <% }) %>
+        </ul>
+    </div>
+    <%- include inc/side %>
 </div>
-<%- include inc/footer%>
+<%- include inc/footer %>

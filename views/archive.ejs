@@ -1,17 +1,19 @@
 <%- include inc/header %>
-<div class="main">
-    <%- include inc/info %>
-    <% var year = 0 %>
-    <dl>
-        <% posts.forEach(function(post,index){ %>
-        <% if(year != post.time.year){ %>
-        <dt>
+<div id="content" class="layout">
+    <div class="col-main">
+        <% var year = 0 %>
+        <dl>
+            <% posts.forEach(function(post,index){ %>
+            <% if(year != post.time.year){ %>
+            <dt>
             <h3><%= post.time.year%></h3>
             <% year = post.time.year%>
-        </dt>
-        <% } %>
-        <dd><a href="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>"><%= post.title %></a></dd>
-        <% })%>
-    </dl>
+            </dt>
+            <% } %>
+            <dd><a href="/u/<%= post.name %>/<%= post.time.day %>/<%= post.title %>"><%= post.title %></a></dd>
+            <% })%>
+        </dl>
+    </div>
+    <%- include inc/side %>
 </div>
 <%- include inc/footer %>

@@ -31,55 +31,54 @@ Post.prototype.save = function(callback){
             post:this.post,
             comments:[]
         };
-    mongodb(function(err,db){
+    mongodb('posts',function(err,db){
         if(err){
             return callback(err);
         }
-        db.collection('posts',function(err,collection){
+        db.insert(post,{safe:true},function(err,post){
             if(err){
-                
                 return callback(err);
             }
-            collection.insert(post,{safe:true},function(err,post){
-                if(err){
-                    
-                    return callback(err);
-                }
-                
-                callback(null);
-            });
+            callback(null);
         });
     });
 }
-Post.getAll = function(name,callback){
+Post.update = function(name,title,day,post,callback){
     mongodb(function(err,db){
         if(err){
             return callback(err);
         }
-        db.collection('posts',function(err,collection){
+        db.update({'name':name,'title':title,'time.day':day},{$set:{post:post}},function(err){
+            callback(err);
+        });
+    });
+}
+Post.read = function(name,title,day,callback){
+
+}
+Post.getAll = function(name,callback){
+    mongodb('posts',function(err,db){
+        if(err){
+            return callback(err);
+        }
+        var query = {};
+        if(name){
+            query.name = name;
+        }
+        db.find(query).sort({time:-1}).toArray(function(err,docs){
+
             if(err){
-                
-                callback(err);
+                return callback(err,null);
             }
-            var query = {};
-            if(name){
-                query.name = name;
-            }
-            collection.find(query).sort({time:-1}).toArray(function(err,docs){
-                 
-                if(err){
-                    return callback(err,null);
-                }
-                docs.forEach(function(doc){
-                    doc.post = markdown.toHTML(doc.post);
-                });
-                callback(null,docs);
+            docs.forEach(function(doc){
+                doc.post = markdown.toHTML(doc.post);
             });
+            callback(null,docs);
         });
     });
 }
 Post.getTen = function(name,page,callback){
-    mongodb(function(err,db){
+    mongodb('posts',function(err,db){
         if(err){
             return callback(err);
         }
@@ -87,134 +86,97 @@ Post.getTen = function(name,page,callback){
         if(name){
             query.name= name;
         }
-        db.collection('posts',function(err,collection){
-            if(err){
-                
-                return callback(err);
-            }
-            collection.count(function(err,total){
-                collection.find(query,{skip:(page-1)*10,limit:10}).sort({time:-1}).toArray(function(err,docs){
-                    
-                    if(err){
-                        docs = [];
-                    }
-                    docs.forEach(function(doc){
-                        doc.post = markdown.toHTML(doc.post);
-                    });
-                    callback(null,docs,total);
-                });
-            });
+        db.count(function(err,total){
+            db.find(query,{skip:(page-1)*10,limit:10}).sort({time:-1}).toArray(function(err,docs){
 
+                if(err){
+                    docs = [];
+                }
+                docs.forEach(function(doc){
+                    doc.post = markdown.toHTML(doc.post);
+                });
+                callback(null,docs,total);
+            });
         });
     });
 }
 Post.getArchive = function(callback){
-    mongodb(function(err,db){
+    mongodb('posts',function(err,db){
         if(err){
             return callback(err);
         }
-        db.collection('posts',function(err,collection){
-            if(err){
-                
-                return callback(err);
-            }
-            collection.find({},{name:1,title:1,time:1}).sort({time:-1}).toArray(function(err,docs){
-               
-               if(err){
-                   docs = [];
-               }
-               callback(null,docs);
-            });
+        db.find({},{name:1,title:1,time:1}).sort({time:-1}).toArray(function(err,docs){
+
+           if(err){
+               docs = [];
+           }
+           callback(null,docs);
         });
     });
 }
 Post.getTags = function(callback){
-    mongodb(function(err,db){
+    mongodb('posts',function(err,db){
         if(err){
             return callback(err);
         }
-        db.collection('posts',function(err,collection){
+        db.distinct('tags.tag',function(err,docs){
+
             if(err){
-                
-                callback(err);
+                return callback(err,null);
             }
-            collection.distinct('tags.tag',function(err,docs){
-                
-                if(err){
-                    return callback(err,null);
-                }
-                callback(null,docs);
-            });
+            callback(null,docs);
         });
     });
 }
 Post.getTag = function(tag,callback){
-    mongodb(function(err,db){
+    mongodb('posts',function(err,db){
         if(err){
             return callback(err);
         }
-        db.collection('posts',function(err,collection){
+        db.find({'tags.tag':tag},{name:1,title:1,time:1}).sort({time:1}).toArray(function(err,docs){
+
             if(err){
-                
-                return callback(err);
+                callback(err,null);
             }
-            collection.find({'tags.tag':tag},{name:1,title:1,time:1}).sort({time:1}).toArray(function(err,docs){
-                
-                if(err){
-                    callback(err,null);
-                }
-                callback(null,docs);
-            });
+            callback(null,docs);
         });
     });
 }
 Post.getOne = function(name,title,day,callback){
-    mongodb(function(err,db){
+    mongodb('posts',function(err,db){
         if(err){
             return callback(err);
         }
-        db.collection('posts',function(err,collection){
-            if(err){
-                
-                return callback(err);
-            }
-            collection.findOne({'name':name,'title':title,'time.day':day},function(err,doc){
-               
-               if(err){
-                   return callback(err);
-               }
-               if(doc){
-                   doc.post = markdown.toHTML(doc.post);
-                   doc.comments.forEach(function(comment){
-                       comment.content = markdown.toHTML(comment.content);
-                   });
-               }
-               callback(err,doc);
-            })
-            collection.update({'name':name,'title':title,'time.day':day},{$inc:{'pv':1}});
+        db.findOne({'name':name,'title':title,'time.day':day},function(err,doc){
+           if(err){
+               return callback(err);
+           }
+           if(doc){
+               doc.post = markdown.toHTML(doc.post);
+               doc.comments.forEach(function(comment){
+                   comment.content = markdown.toHTML(comment.content);
+               });
+           }
+            db.update({'name':name,'title':title,'time.day':day},{$inc:{'pv':1}},function(err){
+                console.log(title+'read one time');
+            });
+           callback(err,doc);
         });
     });
 }
 Post.search = function(keyword,callback){
 
-    mongodb(function(err,db){
+    mongodb('posts',function(err,db){
         if(err){
             return callback(err)
         }
-        db.collection('posts',function(err,collection){
-            if(err){
-                
-                return callback(err);
-            }
-            var pattern = new RegExp('^.*'+keyword+'.*$','i');
-            collection.find({title:pattern},{name:1,title:1,time:1}).sort({time:1}).toArray(function(err,posts){
-                
-               if(err){
-                   return callback(err,null);
-               }
-                callback(null,posts);
-            });
-        });
+        var pattern = new RegExp('^.*'+keyword+'.*$','i');
+        db.find({title:pattern},{name:1,title:1,time:1}).sort({time:1}).toArray(function(err,posts){
 
+           if(err){
+               return callback(err,null);
+           }
+            callback(null,posts);
+        });
     });
 }

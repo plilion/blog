@@ -1,22 +1,20 @@
-<aside>
-    <% if(locals.user) { %>
-    <% } %>
-    <nav>
-        <ul>
-            <li><a href="/">HOME</a></li>
-            <% if(locals.user) { %>
-            <li><a href="/post">POST</a></li>
-            <li><a href="/logout">LOGOUT</a></li>
-            <% }else{ %>
-            <li><a href="/login">LOGIN</a></li>
-            <li><a href="/reg">REGISTER</a></li>
-            <% } %>
-            <li><a href="/archive">ARCHIVE</a></li>
-            <li><a href="/tags">TAG</a></li>
+<div class="col-sub">
+    <div class="sidebar">
+        <h5 class="line"><span>分类</span></h5>
+        <span class="line"></span>
+        <ul class="categories">
+            <li><a href="/cate/cate">Categories1</a></li>
+            <li><a href="/cate/cate">Categories1</a></li>
+            <li><a href="/cate/cate">Categories1</a></li>
         </ul>
-    </nav>
-    <form action="search" method="post" >
-        <input type="text" name="keyword" placeholder="SEARCH" />
-        <input value="搜索" type="submit"/>
-    </form>
-</aside>
+    </div>
+    <div class="sidebar">
+        <h5 class="line"><span>标签</span></h5>
+        <span class="line"></span>
+        <ul class="categories">
+            <li><a href="/cate/cate">Categories1</a></li>
+            <li><a href="/cate/cate">Categories1</a></li>
+            <li><a href="/cate/cate">Categories1</a></li>
+        </ul>
+    </div>
+</div>
