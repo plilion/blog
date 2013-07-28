@@ -1,18 +1,46 @@
-<% post.comments.forEach(function(comment,index){%>
-<p><a href="<%= comment.website %>" target="_blank"><%= comment.name%></a>
-<span class="info">回复于<%= comment.time%></span></p>
-<p><%- comment.content%></p>
-<% })%>
-<form method="post">
-    <% if(locals.user){ %>
-   姓名：<input name="name" type="text" value="<%= locals.user.name%>"/><br/>
-   邮箱： <input name="email" type="email" value="<%= locals.user.email%>"/><br>
-   网址： <input name="website" type="text" value="/u/<%= locals.user.name%>"/><br>
-    <% }else{ %>
-    姓名：<input name="name" type="text" /><br/>
-    邮箱： <input name="email" type="email" /><br>
-    网址： <input name="website" type="text" value="http://"/><br>
-    <% } %>
-    <textarea name="content" id="content" rows="5" cols="80"></textarea><br>
-    <input value="留言" type="submit"/>
-</form>
+<a name="comment" ></a>
+<div class="reply">
+    <h5 class="line">xx条评论</h5>
+    <span class="line"></span>
+    <% post.comments.forEach(function(comment,index){%>
+    <p><a href="<%= comment.website %>" target="_blank"><%= comment.name%></a>
+        <span class="info">回复于<%= comment.time%></span></p>
+    <p><%- comment.content%></p>
+    <% })%>
+</div>
+
+<div class="comments">
+    <h5 class="line"><span>发表评论</span></h5>
+    <span class="line"></span>
+    <form method="post" class="pub-comment">
+        <% if(locals.user){ %>
+        <div class="form">
+            <label >姓名*</label>
+            <input name="name" type="text" value="<%= locals.user.name%>"/>
+        </div>
+        <div class="form">
+            <label>邮箱*</label>
+            <input name="email" type="email" value="<%= locals.user.email%>"/>
+        </div>
+        <div class="form">
+            <label >网址</label>
+            <input name="website" type="text" value="/u/<%= locals.user.name%>"/>
+        </div>
+        <% }else{ %>
+        <div class="form">
+            <label >姓名*</label>
+            <input name="name" type="text" />
+        </div>
+        <div class="form">
+            <label>邮箱*</label>
+            <input name="email" type="email" />
+        </div>
+        <div class="form">
+            <label >网址</label>
+            <input name="website" type="text" value="http://"/>
+        </div>
+        <% } %>
+        <textarea name="content" id="content" ></textarea><br>
+        <input value="提交" type="submit" class="comment-submit" />
+    </form>
+</div>

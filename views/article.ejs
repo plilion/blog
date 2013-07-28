@@ -1,19 +1,10 @@
 <%- include inc/header %>
 <div id="content" class="layout">
     <div class="col-main">
-        <article>
+        <article class="article">
             <header>
-                <p>
-                    作者:<span><%= post.name%></span>
-                    日期:<span><%= post.time.minute %></span>
-                    <% if(locals.user && locals.user.name == post.name){%>
-                    <a href="/edit/<%= post.name %>/<%= post.time.day %>/<%= post.title %>">编辑</a>
-                    <% } %>
-                </p>
-                <p>
-                    阅读:<span><%= post.pv%></span>
-                    评论:<span><%= post.comments.length%></span>
-                </p>
+                <h2 class="post-title"><%= post.title%></h2>
+                <%- include inc/postmeta %>
             </header>
             <section>
                 <%- post.post%>

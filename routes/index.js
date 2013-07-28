@@ -230,8 +230,13 @@ module.exports = function(app){
     app.post('/post',checkLogin);
     app.post('/post',function(req,res){
         var user = req.session.user,
-            tags = [{tag:req.body.tag1},{tag:req.body.tag2},{tag:req.body.tag3}],
-            post = new Post(req.body.name||user.name,req.body.title,tags,req.body.post);
+            tags = [];
+        req.body.tags.forEach(function(tag){
+            if(tag){
+                tags.push({'tag':tag});
+            }
+        });
+        var post = new Post(req.body.name||user.name,req.body.title,tags,req.body.post);
         post.save(function(err){
             if(err){
                 req.flash('error',err);

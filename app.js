@@ -36,9 +36,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(app.router);
 
 // development only
-if ('development' == app.get('env')) {
+
   app.use(express.errorHandler());
-}
+
 routes(app);
 
 http.createServer(app).listen(app.get('port'), function(){

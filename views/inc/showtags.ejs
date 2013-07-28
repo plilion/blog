@@ -1,6 +1,11 @@
-标签:
-<% post.tags.forEach(function(tag){ %>
+<div class="post-tags ">
+    <b>标签:&nbsp;</b>
+<% post.tags.forEach(function(tag,i){ %>
 <% if(tag.tag){ %>
 <a href="/tags/<%= tag.tag%>"><%= tag.tag%></a>
+    <% if( i != (post.tags.length-1)){ %>
+    ,
+    <% } %>
 <% } %>
 <% })%>
+</div>
