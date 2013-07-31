@@ -1,4 +1,4 @@
-var mongodb = require('./db');
+var mongodb = require('./db')('user');
 function User(user){
     this.name = user.name;
     this.password = user.password;
@@ -12,7 +12,7 @@ User.prototype.save = function(callback){
         password:this.password,
         email:this.email
     };
-    mongodb('user',function(err,db){
+    mongodb(function(err,db){
         if(err){
             return callback(err);
         }
@@ -23,7 +23,7 @@ User.prototype.save = function(callback){
     });
 }
 User.get = function(name,callback){
-    mongodb('user',function(err,db){
+    mongodb(function(err,db){
         if(err){
             return callback(err);
         }

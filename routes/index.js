@@ -140,7 +140,7 @@ module.exports = function(app){
 
     app.get('/login',checkNotLogin);
     app.get('/login',function(req,res){
-        res.render('login',{title:'登录',login:false});
+        res.render('login',{title:'登录'});
     });
 
     app.post('/login',checkNotLogin);

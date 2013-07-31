@@ -5,12 +5,13 @@
  * Time: 上午11:29
  * To change this template use File | Settings | File Templates.
  */
-var mongodb = require('./db');
+var mongodb = require('./db')('posts');
 function Comment(name,day,title,comment){
     this.name = name;
     this.day = day;
     this.title = title;
     this.comment = comment;
+    this.comments = [];
 }
 module.exports = Comment;
 Comment.prototype.save = function(callback){
@@ -18,7 +19,7 @@ Comment.prototype.save = function(callback){
         day = this.day,
         title = this.title,
         comment = this.comment;
-    mongodb('posts',function(err,db){
+    mongodb(function(err,db){
         if(err){
             return callback(err);
         }

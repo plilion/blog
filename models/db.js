@@ -12,11 +12,11 @@ var settings =  require('../settings'),
  * @string table
  * @function callback
  */
-module.exports = function(table,callback){
+var opDb = function(table,callback){
     Db.connect(settings.dburl,function(err,connect){
-          if(err){
-              return callback(err);
-          }
+        if(err){
+            return callback(err);
+        }
         connect.collection(table,function(err,collection){
             if(err){
                 return callback(err);
@@ -25,4 +25,11 @@ module.exports = function(table,callback){
         });
 
     });
+}
+module.exports = function(tb){
+    var table = tb;
+    return function(callback){
+           return opDb(tb,callback);
+    };
+
 }

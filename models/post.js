@@ -5,7 +5,7 @@
  * Time: 下午3:43
  * To change this template use File | Settings | File Templates.
  */
-var mongodb = require('./db'),
+var mongodb = require('./db')('posts'),
     markdown = require('markdown').markdown;
 function Post(name,title,tags,post){
     this.name = name;
@@ -31,7 +31,7 @@ Post.prototype.save = function(callback){
             post:this.post,
             comments:[]
         };
-    mongodb('posts',function(err,db){
+    mongodb(function(err,db){
         if(err){
             return callback(err);
         }
@@ -54,10 +54,10 @@ Post.update = function(name,title,day,post,callback){
     });
 }
 Post.read = function(name,title,day,callback){
-
+    Post.getOne(name,title,day,callback);
 }
 Post.getAll = function(name,callback){
-    mongodb('posts',function(err,db){
+    mongodb(function(err,db){
         if(err){
             return callback(err);
         }
@@ -78,7 +78,7 @@ Post.getAll = function(name,callback){
     });
 }
 Post.getTen = function(name,page,callback){
-    mongodb('posts',function(err,db){
+    mongodb(function(err,db){
         if(err){
             return callback(err);
         }
@@ -101,7 +101,7 @@ Post.getTen = function(name,page,callback){
     });
 }
 Post.getArchive = function(callback){
-    mongodb('posts',function(err,db){
+    mongodb(function(err,db){
         if(err){
             return callback(err);
         }
@@ -115,7 +115,7 @@ Post.getArchive = function(callback){
     });
 }
 Post.getTags = function(callback){
-    mongodb('posts',function(err,db){
+    mongodb(function(err,db){
         if(err){
             return callback(err);
         }
@@ -129,7 +129,7 @@ Post.getTags = function(callback){
     });
 }
 Post.getTag = function(tag,callback){
-    mongodb('posts',function(err,db){
+    mongodb(function(err,db){
         if(err){
             return callback(err);
         }
@@ -143,7 +143,7 @@ Post.getTag = function(tag,callback){
     });
 }
 Post.getOne = function(name,title,day,callback){
-    mongodb('posts',function(err,db){
+    mongodb(function(err,db){
         if(err){
             return callback(err);
         }
@@ -166,7 +166,7 @@ Post.getOne = function(name,title,day,callback){
 }
 Post.search = function(keyword,callback){
 
-    mongodb('posts',function(err,db){
+    mongodb(function(err,db){
         if(err){
             return callback(err)
         }

@@ -44,6 +44,9 @@ a:hover{text-decoration: none}
 h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {color: #696969}
 
 .clearfix:after {clear: both;content: '.';display: block;visibility: hidden;height: 0;}
+::-moz-selection{background:#ee6c6d;color:#fff;text-shadow:none}
+::selection{background:#ee6c6d;color:#fff;text-shadow:none}
+/*头部*/
 #header{margin-top:15px;}
 #logo{font-size: 25px;height: 55px;}
 #logo a{position: relative;}
