@@ -36,8 +36,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(app.router);
 
 // development only
+app.configure('development',function(){
+    app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+})
 
-  app.use(express.errorHandler());
 
 routes(app);
 

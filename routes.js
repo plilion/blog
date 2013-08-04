@@ -8,25 +8,21 @@
 var frontend = require('./routes/frontend'),
     backend = require('./routes/backend');
 module.exports = function(app){
-    app.use('/admin',function(req,res,next){
-        console.log(req);
-        if(req.session.user){
-            next();
-        }else{
-            res.redirect('/login');
-        }
-    });
     app.get('/',frontend.index);
-//    app.get('/archive/:pid',frontend.archive);
+    app.get('/post/:postid',frontend.post);
+    app.post('/comment',frontend.comment);
 //    app.get('/tags/:tag?',frontend.tag);
 
     app.get('/login',backend.login);
     app.post('/login',backend.login);
 
-    app.get(/\/admin\/.*/,backend.index);
-//    app.get('/admin/post',backend.post);
-//    app.get('/admin/post/write',backend.write);
-//    app.post('/admin/post/write',backend.write);
-//    app.get('/admin/post/edit:pid',backend.edit);
-//    app.post('/admin/post/edit:pid',backend.edit);
+    app.get('/admin',backend.auth_user,backend.index);
+    app.get('/admin/write',backend.auth_user,backend.write);
+    app.post('/admin/write',backend.auth_user,backend.write);
+
+   app.get('/admin/edit/:postid',backend.edit);
+   app.post('/admin/edit/:pid',backend.edit);
+   app.get('*',function(req,res){
+        res.render('404');
+    })
 }

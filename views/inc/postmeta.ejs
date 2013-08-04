@@ -1,6 +1,6 @@
 <div class="post-meta">
     <span><%= post.time.minute %></span>&nbsp;//&nbsp;
     by:&nbsp;<a href="/u/<%= post.name%>"><%= post.name%></a>&nbsp;//&nbsp;
-    <a title="View all posts in <%= post.name%>" href="/cat/<%= post.name%>"><%= post.name%></a>&nbsp;//&nbsp;
+    <a title="查看所有 <%= post.cat%>分类文章" href="/cat/<%= post.cat%>"><%= post.cat%></a>&nbsp;//&nbsp;
     <a href="#comment" title="view comments"><%= post.comments.length%></a>
 </div>

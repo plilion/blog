@@ -1,21 +1,20 @@
 <div>
     <ul class="pagination clearfix">
-
-    <% if(total == 0){total = 1} %>
-     <% if(!isFirstPage){ %>
-    <li><a href="?p=<%= 1 %>" class="extra"><<</a></li>
-    <li><a href="?p=<%= page-1 %>" class="extra"><</a></li>
-    <% } %>
-    <% for(var i = 1; i <= total; i++){ %>
+        <% if( total == 0){total = 1} %>
+        <% if(!isFirstPage){ %>
+        <li><a href="?p=<%= 1 %>" class="extra"><<</a></li>
+        <li><a href="?p=<%= page-1 %>" class="extra"><</a></li>
+        <% } %>
+        <% for(var i = 1; i <= total; i++){ %>
         <% if(i == page){ %>
         <li><span><%= i %></span></li>
         <% }else{ %>
         <li><a href="?p=<%= i %>" ><%= i %></a></li>
         <% } %>
-    <% } %>
-    <% if(!isLastPage){ %>
-    <li><a href="?p=<%= page+1 %>" class="extra">></a></li>
-    <li><a href="?p=<%= total %>" class="extra">>></a></li>
-    <% }%>
+        <% } %>
+        <% if(!isLastPage){ %>
+        <li><a href="?p=<%= page+1 %>" class="extra">></a></li>
+        <li><a href="?p=<%= total %>" class="extra">>></a></li>
+        <% }%>
     </ul>
 </div>

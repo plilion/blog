@@ -1,0 +1,21 @@
+<%- include ../inc/header %>
+<div id="content" class="layout">
+    <%- include ../inc/adminbar %>
+    <div class="col-main ml30">
+        <form method="POST" action="">
+            <p><label for="title">标题</label></p><input value="<%= post.title %>" name="title" id="title" type="text"/>
+            <p><label >分类</label> </p>
+            <p><input name="cat" value="<%= post.cat %>" type="text"/></p>
+            <p><label>标签</label></p>
+            <p><input name="tags" type="text" value="<%= post.tags %>"/></p>
+            <p><label for="post">文章</label></p>
+
+            <%- include ../inc/markdown %>
+            <input name="postid" type="hidden" value="<%= post._id%>"/>
+            <input value="发表" type="submit"/>
+        </form>
+        <textarea class="hid" id="o_post" cols="30" rows="10"><%= post.post%></textarea>
+    </div>
+
+</div>
+<%- include ../inc/footer %>

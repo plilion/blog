@@ -1,0 +1,20 @@
+<%- include ../inc/header %>
+<div id="content" class="layout">
+    <%- include ../inc/adminbar %>
+    <div class="col-main ml30">
+        <h5 class="line"><span>文章列表</span></h5>
+        <span class="line"></span>
+        <ul class="m-posts">
+            <% posts.forEach(function(post){ %>
+            <li class="post-item clearfix">
+                <a class="mpost-title" href="/post/<%= post._id%>"><%= post.title %></a>
+                <span class="m-op"><a href="/admin/edit/<%= post._id%>">编辑</a><a href="/admin/remove/<%= post._id%>">删除</a></span>
+            </li>
+            <% }) %>
+
+        </ul>
+        <%- include ../inc/page %>
+    </div>
+
+</div>
+<%- include ../inc/footer %>

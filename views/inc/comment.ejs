@@ -1,6 +1,6 @@
 <a name="comment" ></a>
 <div class="reply">
-    <h5 class="line">xx条评论</h5>
+    <h5 class="line"><%= post.comments.length %> 条评论</h5>
     <span class="line"></span>
     <% post.comments.forEach(function(comment,index){%>
     <p><a href="<%= comment.website %>" target="_blank"><%= comment.name%></a>
@@ -12,7 +12,7 @@
 <div class="comments">
     <h5 class="line"><span>发表评论</span></h5>
     <span class="line"></span>
-    <form method="post" class="pub-comment">
+    <form method="post" action="/comment" class="pub-comment">
         <% if(locals.user){ %>
         <div class="form">
             <label >姓名*</label>
@@ -40,6 +40,8 @@
             <input name="website" type="text" value="http://"/>
         </div>
         <% } %>
+        <input name="postid" type="hidden" value="<%= post._id %>"/>
+        <input name="parentid" value="" type="hidden"/>
         <textarea name="content" id="content" ></textarea><br>
         <input value="提交" type="submit" class="comment-submit" />
     </form>
