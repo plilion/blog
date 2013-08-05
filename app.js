@@ -31,8 +31,11 @@ app.use(express.session({
       url:settings.dburl
     })
 }));
-
-app.use(express.static(path.join(__dirname, 'public')));
+var admin_public = __dirname+'/views/admim/public',
+    theme_public = __dirname+'/views/theme/'+settings.theme+'/public';
+app.use('/admin/public',express.static(admin_public));
+app.use('/theme/public',express.static(theme_public));
+app.use(express.static(path.join(__dirname,'public')));
 app.use(app.router);
 
 // development only

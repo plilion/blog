@@ -8,7 +8,8 @@
 
 var marked = require('marked'),
     Post = require('../models/post'),
-      Comment = require('../models/comment');
+    Comment = require('../models/comment'),
+    theme =  'theme/'+require('../settings').theme+'/';
 
 exports.index = function(req,res){
     var page = req.query.p?parseInt(req.query.p,10):1;
@@ -28,17 +29,17 @@ exports.index = function(req,res){
             isFirstPage:isFirstPage,
             isLastPage:isLastPage
         }
-        res.render('index',data);
+        res.render(theme+'index',data);
     });
 }
 exports.post = function(req,res){
     var postid = req.params.postid;
     Post.getOne(postid,function(err,post){
         if(err){
-            return res.render('404');
+            return this.notFound(req,res);
         }
         post.post =  marked(post.post);
-        res.render('post',{
+        res.render(theme+'post',{
             title:post.title,
             post:post
         });
@@ -61,4 +62,7 @@ exports.comment = function(req,res){
            res.redirect('back');
        });
 
+}
+exports.notFound = function(req,res){
+    res.render(theme+'404')
 }

@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>Eastory 'Blog
+        <% if(title){ %>
+            - <%= title %>
+        <% } %>
+    </title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <!--[if lt IE9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif] -->
+</head>
+<body>
+<div id="header" class="layout">
+    <h1 id="logo"><a href="/">Eastory</a></h1>
+    <nav class="layout nav">
+        <ul id="nav" class="layout">
+            <li><a href="/">首页</a></li>
+            <li><a href="/lab">实验室</a></li>
+            <li><a href="/about">关于我</a></li>
+        </ul>
+    </nav>
+
+    <form action="search" method="post" class="search clearfix" >
+        <input type="text" name="keyword" placeholder="SEARCH" class="ri" />
+        <input class="rs" value="" type="submit"/>
+    </form>
+</div>
+<div class="breadcrumbs layout">
+     <div class="crumbs">
+         <a href="/">首页</a>&nbsp;//&nbsp;
+         <a title="View all posts in Resource" href="/cat/cat">Resource</a>&nbsp;//&nbsp;
+         <span>title</span>
+     </div>
+</div>

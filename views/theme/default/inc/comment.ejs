@@ -1,0 +1,48 @@
+<a name="comment" ></a>
+<div class="reply">
+    <h5 class="line"><%= post.comments.length %> 条评论</h5>
+    <span class="line"></span>
+    <% post.comments.forEach(function(comment,index){%>
+    <p><a href="<%= comment.website %>" target="_blank"><%= comment.name%></a>
+        <span class="info">回复于<%= comment.time%></span></p>
+    <p><%- comment.content%></p>
+    <% })%>
+</div>
+
+<div class="comments">
+    <h5 class="line"><span>发表评论</span></h5>
+    <span class="line"></span>
+    <form method="post" action="/comment" class="pub-comment">
+        <% if(locals.user){ %>
+        <div class="form">
+            <label >姓名*</label>
+            <input name="name" type="text" value="<%= locals.user.name%>"/>
+        </div>
+        <div class="form">
+            <label>邮箱*</label>
+            <input name="email" type="email" value="<%= locals.user.email%>"/>
+        </div>
+        <div class="form">
+            <label >网址</label>
+            <input name="website" type="text" value="/u/<%= locals.user.name%>"/>
+        </div>
+        <% }else{ %>
+        <div class="form">
+            <label >姓名*</label>
+            <input name="name" type="text" />
+        </div>
+        <div class="form">
+            <label>邮箱*</label>
+            <input name="email" type="email" />
+        </div>
+        <div class="form">
+            <label >网址</label>
+            <input name="website" type="text" value="http://"/>
+        </div>
+        <% } %>
+        <input name="postid" type="hidden" value="<%= post._id %>"/>
+        <input name="parentid" value="" type="hidden"/>
+        <textarea name="content" id="content" ></textarea><br>
+        <input value="提交" type="submit" class="comment-submit" />
+    </form>
+</div>

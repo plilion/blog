@@ -8,7 +8,10 @@ module.exports = {
     db:'blog',
     host:'localhost',
     dburl:'mongodb://192.168.40.104:27017/blog',
+    //dburl:'mongodb://eastory:zxczxc_123@ds031108.mongolab.com:31108/blog',
+    theme:'default',
+    admin:'admin',
     page:10
-    //dburl:'mongodb://eastory:zxczxc_123@ds031108.mongolab.com:31108/blog'
+
 }
 
