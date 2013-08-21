@@ -1,8 +1,8 @@
-<%- include ../inc/header %>
+<%- include inc/header %>
 <div id="content" class="layout">
-    <%- include ../inc/adminbar %>
+    <%- include inc/adminbar %>
     <div class="col-main ml30">
-        <form method="POST" action="">
+        <form method="POST" action="" class="form">
             <p><label for="title">标题</label></p><input name="title" id="title" type="text"/>
             <p><label >分类</label> </p>
             <p><input name="cat" type="text"/></p>
@@ -10,9 +10,9 @@
             <p><input name="tags" type="text"/></p>
             <p><label for="post">文章</label></p>
             <%- include ../inc/markdown %>
-            <input value="发表" type="submit"/>
+            <input value="发表" type="submit" class="submit"/>
         </form>
     </div>
 
 </div>
-<%- include ../inc/footer %>
+<%- include inc/footer %>

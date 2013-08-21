@@ -4,32 +4,5 @@
  * Time: 下午9:15
  */
 var settings =  require('../settings'),
-    Db = require('mongodb'),
-    Connection = require('mongodb').Connection,
-    Server = require('mongodb').Server;
-//module.exports = new Db(settings.db,new Server(settings.host,Connection.DEFAULT_PORT,{}));
-/**
- * @string table
- * @function callback
- */
-var opDb = function(table,callback){
-    Db.connect(settings.dburl,function(err,connect){
-        if(err){
-            return callback(err);
-        }
-        connect.collection(table,function(err,collection){
-            if(err){
-                return callback(err);
-            }
-            callback(err,collection);
-        });
-
-    });
-}
-module.exports = function(tb){
-    var table = tb;
-    return function(callback){
-           return opDb(tb,callback);
-    };
-
-}
+    Db = require('mongoskin').db(settings.dburl);
+module.exports = Db;

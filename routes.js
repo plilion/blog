@@ -22,5 +22,7 @@ module.exports = function(app){
 
    app.get('/admin/edit/:postid',admin.edit);
    app.post('/admin/edit/:pid',admin.edit);
-//   app.get('*',blog.notFound);
+
+   app.get('/admin/lab',admin.auth_user,admin.lab);
+   app.get('*',blog.notFound);
 }

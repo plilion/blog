@@ -8,11 +8,19 @@
 
 var marked = require('marked'),
     Post = require('../models/post'),
+    Side = require('./side'),
     Comment = require('../models/comment'),
+    eproxy = require('eventproxy'),
     theme =  'theme/'+require('../settings').theme+'/';
 
 exports.index = function(req,res){
-    var page = req.query.p?parseInt(req.query.p,10):1;
+    var page = req.query.p?parseInt(req.query.p,10): 1,
+        ep = new eproxy();
+    ep.all('posts','tags','cats',function(posts,tags,cats){
+        posts.tags = tags;
+        posts.cats = cats;
+        res.render(theme+'index',posts);
+    });
     Post.page(null,page,function(err,posts,total,isFirstPage,isLastPage){
         if(err){
             posts = [];
@@ -22,28 +30,41 @@ exports.index = function(req,res){
             post.post = marked(post.post);
         });
         var data = {
-            title:'后台管理',
+            title:'首页',
             posts:posts,
             page:page,
             total:total,
             isFirstPage:isFirstPage,
             isLastPage:isLastPage
         }
-        res.render(theme+'index',data);
+        ep.trigger('posts',data);
     });
+    Side.cats(ep);
+    Side.tags(ep);
+
 }
 exports.post = function(req,res){
-    var postid = req.params.postid;
+    var postid = req.params.postid,
+        ep = new eproxy();
+    ep.all('post','tags','cats',function(posts,tags,cats){
+        posts.tags = tags;
+        posts.cats = cats;
+        res.render(theme+'post',posts);
+    });;
     Post.getOne(postid,function(err,post){
         if(err){
             return this.notFound(req,res);
         }
         post.post =  marked(post.post);
-        res.render(theme+'post',{
+        req.flash('crumbs',[['\/cat\/'+post.cat,post.cat],[post.title]]);
+        ep.trigger('post',{
             title:post.title,
-            post:post
+            post:post,
+            crumbs:req.flash('crumbs')
         });
     });
+    Side.cats(ep);
+    Side.tags(ep);
 }
 exports.comment = function(req,res){
        var name = req.body.name,

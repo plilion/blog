@@ -3,18 +3,18 @@
         <h5 class="line"><span>分类</span></h5>
         <span class="line"></span>
         <ul class="categories">
-            <li><a href="/cate/cate">Categories1</a></li>
-            <li><a href="/cate/cate">Categories1</a></li>
-            <li><a href="/cate/cate">Categories1</a></li>
+            <% cats.forEach(function(cat){ %>
+            <li><a href="/cat/<%= cat %>"><%= cat %></a></li>
+            <% }) %>
         </ul>
     </div>
     <div class="sidebar">
         <h5 class="line"><span>标签</span></h5>
         <span class="line"></span>
         <ul class="categories">
-            <li><a href="/cate/cate">Categories1</a></li>
-            <li><a href="/cate/cate">Categories1</a></li>
-            <li><a href="/cate/cate">Categories1</a></li>
+            <% tags.forEach(function(tag){ %>
+                <li><a href="/tag/<%= tag %>"><%= tag %></a></li>
+            <% }) %>
         </ul>
     </div>
 </div>

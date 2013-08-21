@@ -6,7 +6,7 @@
         <div class="post-item clearfix">
             <h2 class="post-title"><a href="/post/<%= post._id %>"><%= post.title %></a></h2>
             <%- include inc/postmeta %>
-            <section>
+            <section class="markdown-body">
                 <%- post.post%>
             </section>
             <span class="read-more">[<a href="/post/<%= post._id %>" title="阅读全文">阅读全文</a>]</span>

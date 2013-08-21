@@ -12,13 +12,20 @@ var express = require('express')
   ,flash = require('connect-flash');
 
 var app = express();
+ //static file
+var admin_public = __dirname+'/views/admin/public',
+    theme_public = __dirname+'/views/theme/'+settings.theme+'/public';
+app.use('/admin',express.static(admin_public));
+app.use('/theme',express.static(theme_public));
+app.use(express.static(path.join(__dirname,'public')));
+app.use(express.favicon(__dirname + '/public/favicon.ico'));
 
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
-app.use(flash())
-app.use(express.favicon());
+app.use(express.compress());
+app.use(flash());
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(express.methodOverride());
@@ -31,11 +38,13 @@ app.use(express.session({
       url:settings.dburl
     })
 }));
-var admin_public = __dirname+'/views/admim/public',
-    theme_public = __dirname+'/views/theme/'+settings.theme+'/public';
-app.use('/admin/public',express.static(admin_public));
-app.use('/theme/public',express.static(theme_public));
-app.use(express.static(path.join(__dirname,'public')));
+
+app.use(function(req,res,next){
+    if(req.session.user){
+        req.flash('user',req.session.user);
+    }
+    next();
+});
 app.use(app.router);
 
 // development only

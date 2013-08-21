@@ -5,9 +5,11 @@
  * Time: 上午11:29
  * To change this template use File | Settings | File Templates.
  */
-var mongodb = require('./db')('posts'),
-    encrypto = require('../lib/util').encrypto,
-    formatNum = require('../lib/util').formatNum;
+var db = require('./db'),
+    util = require('../lib/util'),
+    encrypto = util.encrypto,
+    formatNum = util.formatNum;
+db.bind('posts');
 function Comment(postid,parentid,name,email,website,content){
     var date = new Date();
     this.postid = postid;
@@ -28,10 +30,7 @@ Comment.prototype.save = function(callback){
         content = this.content,
         time = this.time,
         parentid = this.parentid;
-    mongodb(function(err,db){
-        if(err){
-            return callback(err);
-        }
+
         var comment = {
             _id:id,
             name:name,
@@ -41,8 +40,7 @@ Comment.prototype.save = function(callback){
             time:time
         };
         if(parentid){comment.parentid = parentid;}
-        db.findAndModify({_id:postid},[['time',-1]],{$push:{'comments':comment}},{'new':true},function(err){
+        db.posts.findAndModify({_id:postid},[['time',-1]],{$push:{'comments':comment}},{'new':true},function(err){
             callback(err || null);
         });
-    });
 }

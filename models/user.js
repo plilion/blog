@@ -1,9 +1,10 @@
-var mongodb = require('./db')('user');
+var db = require('./db');
 function User(user){
     this.name = user.name;
     this.password = user.password;
     this.email = user.email;
 }
+db.bind('user');
 module.exports = User;
 
 User.prototype.save = function(callback){
@@ -12,23 +13,13 @@ User.prototype.save = function(callback){
         password:this.password,
         email:this.email
     };
-    mongodb(function(err,db){
-        if(err){
-            return callback(err);
-        }
-        db.insert(user,{safe:true},function(err,user){
+    db.user.insert(user,{safe:true},function(err,user){
 
-            callback(err,user);
-        });
+        callback(err,user);
     });
 }
 User.get = function(name,callback){
-    mongodb(function(err,db){
-        if(err){
-            return callback(err);
-        }
-        db.findOne({name:name},function(err,doc){
-
+        db.user.findOne({name:name},function(err,doc){
             if(doc){
                var user = new User(doc);
                 callback(err,user);
@@ -37,5 +28,4 @@ User.get = function(name,callback){
             }
 
         });
-    });
 }

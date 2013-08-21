@@ -9,13 +9,14 @@
 var User = require('../models/user'),
     Post = require('../models/post'),
     util = require('../lib/util'),
-    marked = require('marked');
+    marked = require('marked'),
+    eventproxy = require('eventproxy');
 exports.login = function(req,res){
     if(req.method == 'GET'){
         if(req.session.user){
             return res.redirect('/admin');
         }
-        return res.render('login',{title:'登录'});
+        return res.render('admin/login',{title:'登录'});
     }
     if(req.method == 'POST'){
         var name = req.body.name,
@@ -28,7 +29,7 @@ exports.login = function(req,res){
             if(user && user.password == password){
                 req.session.user = user;
                 req.flash('success','登陆成功');
-                res.redirect('/');
+                res.redirect('/admin');
             }else{
                 req.flash('error','用户名或密码错误');
                 res.redirect('/login');
@@ -48,7 +49,7 @@ exports.auth_user = function(req,res,next){
 exports.index = function(req,res){
     var page = req.query.p?parseInt(req.query.p,10): 1,
         name = req.session.user.name;
-    Post.page(name,page,function(err,posts,total,isFirstPage,isLastPage){
+    Post.page({name:name},page,function(err,posts,total,isFirstPage,isLastPage){
         var data = {
             title:'后台管理',
             posts:posts,
@@ -58,6 +59,7 @@ exports.index = function(req,res){
             isLastPage:isLastPage
         }
         if(err){
+            console.log(err);
             data.posts = [];
             data.total = 1;
         }
@@ -130,4 +132,9 @@ exports.edit = function(req,res){
                 res.redirect('/admin');
             });
         }
+}
+
+
+exports.lab = function(req,res){
+
 }
