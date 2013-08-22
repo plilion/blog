@@ -37,7 +37,7 @@ Post.prototype.save = function(callback){
             post:this.post,
             comments:[]
         };
-        db.insert(post,{safe:true},function(err,post){
+        db.posts.insert(post,{safe:true},function(err,post){
             if(err){
                 return callback(err);
             }

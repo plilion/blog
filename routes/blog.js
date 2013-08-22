@@ -26,8 +26,14 @@ exports.index = function(req,res){
             posts = [];
             total = 1;
         }
+        var index,view;
         posts.forEach(function(post){
-            post.post = marked(post.post);
+            index = post.post.indexOf('<!--more-->');
+            view = post.post;
+            if(index > -1){
+                view = view.slice(0,index);
+            }
+            post.post = marked(view);
         });
         var data = {
             title:'首页',
