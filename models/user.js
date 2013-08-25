@@ -1,4 +1,4 @@
-var db = require('./db');
+var db = require('./../lib/db');
 function User(user){
     this.name = user.name;
     this.password = user.password;

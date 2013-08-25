@@ -59,7 +59,7 @@ exports.post = function(req,res){
     });;
     Post.getOne(postid,function(err,post){
         if(err){
-            return this.notFound(req,res);
+            return res.redirect('/404');
         }
         post.post =  marked(post.post);
         req.flash('crumbs',[['\/cat\/'+post.cat,post.cat],[post.title]]);

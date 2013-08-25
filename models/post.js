@@ -5,8 +5,7 @@
  * Time: 下午3:43
  * To change this template use File | Settings | File Templates.
  */
-var db = require('./db'),
-    encrypto = require('../lib/util').encrypto,
+var db = require('./../lib/db'),
     setting = require('../settings');
 db.bind('posts');
 function Post(name,title,cat,tags,post){
@@ -26,9 +25,7 @@ Post.prototype.save = function(callback){
             day:(date.getFullYear())+'-'+(date.getMonth()+1)+'-'+date.getDate(),
             minute:(date.getFullYear())+'-'+(date.getMonth()+1)+date.getDate()+' '+date.getHours()+':'+date.getMinutes()
         },
-        id = encrypto(date.getTime()+this.post.length+''),
         post = {
-            _id:id,
             name:this.name,
             title:this.title,
             cat:this.cat,
@@ -47,7 +44,7 @@ Post.prototype.save = function(callback){
 Post.update = function(post,callback){
         var postid = post._id;
         delete post._id;
-        db.posts.update({'_id':postid},{$set:post},function(err){
+        db.posts.update({'_id':db.ObjectID.createFromHexString(postid)},{$set:post},function(err){
             callback(err);
         });
 }
@@ -101,7 +98,7 @@ Post.getCats = function(callback){
 }
 Post.getTags = function(callback){
         db.posts.distinct('tags.tag',function(err,docs){
-
+            console.log(docs);
             if(err){
                 return callback(err,null);
             }
@@ -118,11 +115,11 @@ Post.getTag = function(tag,callback){
         });
 }
 Post.getOne = function(id,callback){
-        db.posts.findOne({'_id':id},function(err,doc){
+        db.posts.findOne({'_id':db.ObjectID.createFromHexString(id)},function(err,doc){
            if(err){
                return callback(err);
            }
-            db.posts.update({'_id':id},{$inc:{'pv':1}},function(err){});
+           db.posts.update({'_id':db.ObjectID.createFromHexString(id)},{$inc:{'pv':1}},function(err){});
            callback(err,doc);
         });
 }

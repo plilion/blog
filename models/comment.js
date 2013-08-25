@@ -5,7 +5,7 @@
  * Time: 上午11:29
  * To change this template use File | Settings | File Templates.
  */
-var db = require('./db'),
+var db = require('./../lib/db'),
     util = require('../lib/util'),
     encrypto = util.encrypto,
     formatNum = util.formatNum;
@@ -40,7 +40,7 @@ Comment.prototype.save = function(callback){
             time:time
         };
         if(parentid){comment.parentid = parentid;}
-        db.posts.findAndModify({_id:postid},[['time',-1]],{$push:{'comments':comment}},{'new':true},function(err){
+        db.posts.findAndModify({_id:db.ObjectID(postid)},[['time',-1]],{$push:{'comments':comment}},{'new':true},function(err){
             callback(err || null);
         });
 }
