@@ -173,21 +173,24 @@ h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
     position: absolute;
     top:0;
     right: 0;
-    width:174px;
+    width:178px;
 }
 .rs {
     cursor: pointer;
     background: url("../img/search.png") center center #EA4748 no-repeat;
     width: 43px;
-    height: 34px;
+    height: 36px;
     border:none;
     float: right
 }
 .ri {
     height: 34px;
-    border:none;
+    border:1px solid #ffffff;
     float: left;
-    outline: none;
+    padding: 1px;
+}
+.ri:focus{
+    outline:1px solid #EA4748;
 }
 /*面包屑*/
 .breadcrumbs {
@@ -540,25 +543,25 @@ span.line {
     font-size: inherit
 }
 .markdown-body h1 {
-    font-size: 2.5em;
+    font-size: 18px;
     border-bottom: 1px solid #ddd
 }
 .markdown-body h2 {
-    font-size: 2em;
+    font-size: 16px;
     border-bottom: 1px solid #eee
 }
 .markdown-body h3 {
-    font-size: 1.5em
+    font-size: 14px
 }
 .markdown-body h4 {
-    font-size: 1.2em
+    font-size: 14px
 }
 .markdown-body h5 {
-    font-size: 1em
+    font-size: 12px;
 }
 .markdown-body h6 {
     color: #777;
-    font-size: 1em
+    font-size: 12px;
 }
 .markdown-body p, .markdown-body blockquote, .markdown-body ul, .markdown-body ol, .markdown-body dl, .markdown-body table, .markdown-body pre {
     margin: 15px 0

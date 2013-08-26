@@ -24,5 +24,6 @@ module.exports = function(app){
    app.post('/admin/edit/:pid',admin.edit);
 
    app.get('/admin/lab',admin.auth_user,admin.lab);
+   app.get('/404',blog.notFound);
    app.get('*',blog.notFound);
 }

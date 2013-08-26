@@ -7,7 +7,7 @@
         <ul class="m-posts">
             <% posts.forEach(function(post){ %>
             <li class="post-item clearfix">
-                <a class="mpost-title" href="/post/<%= post._id%>"><%= post.title %></a>
+                <a class="mpost-title" target="_blank" href="/post/<%= post._id%>"><%= post.title %></a>
                 <span class="m-op"><a href="/admin/edit/<%= post._id%>">编辑</a><a href="/admin/remove/<%= post._id%>">删除</a></span>
             </li>
             <% }) %>

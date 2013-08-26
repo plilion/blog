@@ -8,6 +8,7 @@
 
 var User = require('../models/user'),
     Post = require('../models/post'),
+    Lab = require('../models/lab'),
     util = require('../lib/util'),
     marked = require('marked'),
     eventproxy = require('eventproxy');
