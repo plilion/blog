@@ -37,12 +37,25 @@
     add_pro_form.addEventListener('submit',function(event){
         event.preventDefault();
         var xhr = new XMLHttpRequest(),data = new FormData(add_pro_form);
+
+
+        xhr.upload.onprogress = function(e){
+            console.log((e.loaded/e.total)*100+'%');
+        }
+        xhr.onloadstart = function(e){
+            console.log('loadstart');
+        }
+        xhr.onload = function(e){
+            console.log('load');
+        }
+        xhr.onloadend = function(e){
+            console.log(xhr.responseText);
+        }
+        xhr.onerror = function(e){
+        }
         xhr.open('POST','/admin/addLab',true);
         //xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-        xhr.setRequestHeader('enctype','multipart/form-data')
-        xhr.onerror = function(e){
-            console.log(e);
-        }
+        xhr.setRequestHeader('enctype','multipart/form-data');
         xhr.send(data);
         return false;
     });

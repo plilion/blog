@@ -134,6 +134,9 @@ exports.edit = function(req,res){
             });
         }
 }
+exports.del = function(req,res){
+
+}
 
 
 exports.lab = function(req,res){
@@ -147,5 +150,17 @@ exports.lab = function(req,res){
     res.render('admin/lab',data);
 }
 exports.addLab = function(req,res){
-    res.send('ok');
+    console.log('add lab');
+    req.form.on('fileBegin',function(){
+        console.log(arguments);
+    });
+    req.form.on('progress', function(loaded,total){
+        console.log((loaded/total)*100+'%');
+    });
+    req.form.on('end',function(){
+        console.log(req.files);
+        res.send('ok');
+    });
+    //res.send('ok');
+
 }

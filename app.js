@@ -27,7 +27,11 @@ app.set('view engine', 'ejs');
 app.use(express.compress());
 app.use(flash());
 app.use(express.logger('dev'));
-app.use(express.bodyParser());
+app.use(express.bodyParser({
+    uploadDir:__dirname+'/public/tmp',//默认上传目录
+    keepExtensions:true,  //显示扩展名
+    defer:true   //提供上传监控
+}));
 app.use(express.methodOverride());
 app.use(express.cookieParser());
 app.use(express.session({
