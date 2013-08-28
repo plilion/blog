@@ -28,12 +28,7 @@ exports.index = function(req,res){
         }
         var index,view;
         posts.forEach(function(post){
-            index = post.post.indexOf('<!--more-->');
-            view = post.post;
-            if(index > -1){
-                view = view.slice(0,index);
-            }
-            post.post = marked(view);
+            post.post = marked(post.post.split('<!--more-->')[0]);
         });
         var data = {
             title:'首页',

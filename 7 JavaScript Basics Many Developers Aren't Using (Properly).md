@@ -130,4 +130,4 @@ javascript，一个比较简单的语言，我们开发出各宗灵活自由的�
 有经验的javascript程序员看完这篇文章也许会说：“这些我都知道”,但是从另外一方面说，善泳者溺于水，他们也许会在这些地方跌到。所以留心javascript的这些小地方，也许会为你带来大大的不同
 
 
-  [1]: http://tech.pro/tutorial/1453/7-javascript-basics-many-developers-aren-t-using-properly?utm_source=javascriptweekly&utm_medium=email 
+[1]: http://tech.pro/tutorial/1453/7-javascript-basics-many-developers-aren-t-using-properly?utm_source=javascriptweekly&utm_medium=email 

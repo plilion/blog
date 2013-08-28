@@ -137,5 +137,15 @@ exports.edit = function(req,res){
 
 
 exports.lab = function(req,res){
-
+    var data = {
+        title:'实验室',
+        page:1,
+        total:1,
+        isFirstPage:1,
+        isLastPage:1
+    }
+    res.render('admin/lab',data);
+}
+exports.addLab = function(req,res){
+    res.send('ok');
 }

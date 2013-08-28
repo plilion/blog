@@ -1,20 +1,50 @@
-<%- include ../inc/header %>
+<%- include inc/header %>
 <div id="content" class="layout">
     <%- include inc/adminbar %>
     <div class="col-main ml30">
-        <h5 class="line"><span>文章管理</span></h5>
+        <h5 class="line"><span>实验室管理 <a class="pub_pro" id="pub_pro" href="javascript:" title="发布项目">+</a></span></h5>
         <span class="line"></span>
         <ul class="m-posts">
-            <% posts.forEach(function(post){ %>
-            <li class="post-item clearfix">
-                <a class="mpost-title" target="_blank" href="/post/<%= post._id%>"><%= post.title %></a>
-                <span class="m-op"><a href="/admin/edit/<%= post._id%>">编辑</a><a href="/admin/remove/<%= post._id%>">删除</a></span>
-            </li>
-            <% }) %>
+
 
         </ul>
         <%- include inc/page %>
     </div>
 
 </div>
+<div class="add_pro hid" id="add_pro">
+<h5 class="line"><span>发布项目</span></h5>
+<span class="line"></span>
+<form class="form" id="add_pro_form" action="addLab" method="post" enctype="application/x-www-form-urlencoded">
+
+    <p><label for="title">标题：</label><input name="title" id="title" type="text"/></p>
+    <p><label for="cat">分类：</label><input name="cat" id="cat" type="text"/></p>
+    <p><label for="files">文件：</label><input name="files" id="files" type="file" multiple /></p>
+    <input value="发布" type="submit" class="submit"/>&nbsp;&nbsp;<a id="cancel_pro" href="javascript:">取消</a>
+</form>
+</div>
+<script type="text/javascript">
+    var pub_pro = document.querySelector('#pub_pro'),
+            add_pro = document.querySelector('#add_pro'),
+            cancel_pro = document.querySelector('#cancel_pro'),
+            add_pro_form = document.querySelector('#add_pro_form');
+    pub_pro.addEventListener('click',function(){
+        add_pro.classList.remove('hid');
+    },false);
+    cancel_pro.addEventListener('click',function(){
+        add_pro.classList.add('hid');
+    },false);
+    add_pro_form.addEventListener('submit',function(event){
+        event.preventDefault();
+        var xhr = new XMLHttpRequest(),data = new FormData(add_pro_form);
+        xhr.open('POST','/admin/addLab',true);
+        //xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        xhr.setRequestHeader('enctype','multipart/form-data')
+        xhr.onerror = function(e){
+            console.log(e);
+        }
+        xhr.send(data);
+        return false;
+    });
+</script>
 <%- include inc/footer %>

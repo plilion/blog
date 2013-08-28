@@ -14,7 +14,7 @@ fieldset,img{border:0}
 button,input,select,textarea{font-size:100%}
 table{border-collapse:collapse;border-spacing:0}
 /*html5*/
-article,aside,dialog,footer,header,section,footer,nav,figure,menu{display:block}
+article,aside,footer,header,section,footer,nav,figure,menu{display:block}
 
 #page,#header,#content,#footer{margin-left:auto;margin-right:auto;position: relative;}
 .w950{width:950px}
@@ -141,7 +141,7 @@ span.line{border-bottom: 4px solid #EA4748;margin-top:-24px;width: 100px;display
 /*表单*/
 .comments{margin-top: 20px;}
 .pub-comment{margin-top: 20px;}
-.form{margin-bottom: 15px;}
+.form{margin:9px 0 15px 0;}
 .form label{display:block;color:#929292;margin:0 0 5px;}
 .form input{width:278px;margin:4px 0;padding: 8px 5px;border: 1px solid #dbdbdb;color: #c5c5c5;outline: none;}
 .pub-comment textarea{width: 600px;height: 100px;border: 1px solid #dbdbdb;outline: none;}
@@ -301,7 +301,6 @@ span.line{border-bottom: 4px solid #EA4748;margin-top:-24px;width: 100px;display
     margin: 15px 0
 }
 .markdown-body hr {
-    background: transparent url("/assets/primer/markdown/dirty-shade-3d43d541b0f089487a139219bbf0309c6b1f2cd8.png") repeat-x 0 0;
     border: 0 none;
     color: #ccc;
     height: 4px;
@@ -309,7 +308,7 @@ span.line{border-bottom: 4px solid #EA4748;margin-top:-24px;width: 100px;display
     margin: 15px 0
 }
 .markdown-body li p.first {
-    display: inline-block
+    display: inline-block;
 }
 .markdown-body ul,.markdown-body ol {
     padding-left: 30px
@@ -486,6 +485,9 @@ span.line{border-bottom: 4px solid #EA4748;margin-top:-24px;width: 100px;display
 .login .login-submit{text-align: left;padding-left: 30px;}
 
 
+.lab{}
+.pub_pro{background:#EA4748;color:white;padding: 0 5px; }
+.add_pro{position:absolute;top:25%;left:45%;border:1px solid #EA4748;padding: 5px;background: #ffffff;z-index: 100}
 
 
 

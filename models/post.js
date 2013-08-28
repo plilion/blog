@@ -98,7 +98,6 @@ Post.getCats = function(callback){
 }
 Post.getTags = function(callback){
         db.posts.distinct('tags.tag',function(err,docs){
-            console.log(docs);
             if(err){
                 return callback(err,null);
             }

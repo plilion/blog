@@ -2,14 +2,15 @@
 <div id="content" class="layout">
     <%- include inc/adminbar %>
     <div class="col-main ml30">
+        <h5 class="line"><span>发表文章</span></h5>
+        <span class="line"></span>
         <form method="POST" action="" class="form">
-            <p><label for="title">标题</label></p><input value="<%= post.title %>" name="title" id="title" type="text"/>
-            <p><label >分类</label> </p>
+            <p><label for="title">标题：</label></p><input value="<%= post.title %>" name="title" id="title" type="text"/>
+            <p><label >分类：</label> </p>
             <p><input name="cat" value="<%= post.cat %>" type="text"/></p>
-            <p><label>标签</label></p>
+            <p><label>标签：</label></p>
             <p><input name="tags" type="text" value="<%= post.tags %>"/></p>
             <p><label for="post">文章</label></p>
-
             <%- include inc/markdown %>
             <input name="postid" type="hidden" value="<%= post._id%>"/>
             <input value="发表" type="submit" class="submit"/>
