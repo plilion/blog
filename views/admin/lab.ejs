@@ -5,8 +5,12 @@
         <h5 class="line"><span>实验室管理 <a class="pub_pro" id="pub_pro" href="javascript:" title="发布项目">+</a></span></h5>
         <span class="line"></span>
         <ul class="m-posts">
-
-
+            <% labs.forEach(function(lab){ %>
+            <li class="post-item clearfix">
+                <a class="mpost-title" target="_blank" href="/lab/<%= lab._id%>"><%= lab.title %></a>
+                <span class="m-op"><a href="/admin/labedit/<%= lab._id%>">编辑</a><a href="/admin/labdel/<%= lab._id%>">删除</a></span>
+            </li>
+            <% }) %>
         </ul>
         <%- include inc/page %>
     </div>
@@ -16,10 +20,11 @@
 <h5 class="line"><span>发布项目</span></h5>
 <span class="line"></span>
 <form class="form" id="add_pro_form" action="addLab" method="post" enctype="application/x-www-form-urlencoded">
-
+    <progress min="0" max="100" value="0">0% complete</progress>
     <p><label for="title">标题：</label><input name="title" id="title" type="text"/></p>
     <p><label for="cat">分类：</label><input name="cat" id="cat" type="text"/></p>
     <p><label for="files">文件：</label><input name="files" id="files" type="file" multiple /></p>
+    <p><label for="des">描述：</label><textarea name="des" id="des" cols="30" rows="10"></textarea></p>
     <input value="发布" type="submit" class="submit"/>&nbsp;&nbsp;<a id="cancel_pro" href="javascript:">取消</a>
 </form>
 </div>
@@ -27,19 +32,23 @@
     var pub_pro = document.querySelector('#pub_pro'),
             add_pro = document.querySelector('#add_pro'),
             cancel_pro = document.querySelector('#cancel_pro'),
-            add_pro_form = document.querySelector('#add_pro_form');
+            add_pro_form = document.querySelector('#add_pro_form'),
+            progress = document.querySelector('progress');
     pub_pro.addEventListener('click',function(){
         add_pro.classList.remove('hid');
     },false);
     cancel_pro.addEventListener('click',function(){
         add_pro.classList.add('hid');
+        add_pro_form.reset();
+        progress.textContent = progress.value = 0;
     },false);
     add_pro_form.addEventListener('submit',function(event){
         event.preventDefault();
         var xhr = new XMLHttpRequest(),data = new FormData(add_pro_form);
 
-
         xhr.upload.onprogress = function(e){
+            progress.value =(e.loaded/e.total)*100;
+            progress.textContent =progress.value;
             console.log((e.loaded/e.total)*100+'%');
         }
         xhr.onloadstart = function(e){
@@ -49,11 +58,16 @@
             console.log('load');
         }
         xhr.onloadend = function(e){
-            console.log(xhr.responseText);
+            var info = xhr.response;
+            if(info.msg){
+                alert(info.msg);
+            }
         }
         xhr.onerror = function(e){
+            alert('上传失败');
         }
         xhr.open('POST','/admin/addLab',true);
+        xhr.responseType = 'json';
         //xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
         xhr.setRequestHeader('enctype','multipart/form-data');
         xhr.send(data);

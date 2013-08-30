@@ -21,10 +21,12 @@ module.exports = function(app){
     app.post('/admin/write',admin.auth_user,admin.write);
 
    app.get('/admin/edit/:postid',admin.edit);
-   app.post('/admin/edit/:pid',admin.edit);
+   app.post('/admin/edit/:postid',admin.edit);
+   app.get('/admin/del/:postid',admin.postDel);
 
    app.get('/admin/lab',admin.auth_user,admin.lab);
    app.post('/admin/addLab',admin.auth_user,admin.addLab);
+   app.get('/admin/labdel/:labid',admin.auth_user,admin.labDel);
 
    app.get('/404',blog.notFound);
    app.get('*',blog.notFound);

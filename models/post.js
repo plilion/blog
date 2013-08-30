@@ -48,6 +48,15 @@ Post.update = function(post,callback){
             callback(err);
         });
 }
+Post.del = function(id,callback){
+    db.posts.remove({'_id':db.ObjectID.createFromHexString(id)},function(err,result){
+        if(err){
+            callback(err);
+        }else{
+            callback(null,result);
+        }
+    });
+}
 Post.read = function(id,callback){
     Post.getOne(id,callback);
 }

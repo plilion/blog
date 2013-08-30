@@ -10,8 +10,7 @@ var User = require('../models/user'),
     Post = require('../models/post'),
     Lab = require('../models/lab'),
     util = require('../lib/util'),
-    marked = require('marked'),
-    eventproxy = require('eventproxy');
+    marked = require('marked');
 exports.login = function(req,res){
     if(req.method == 'GET'){
         if(req.session.user){
@@ -47,6 +46,7 @@ exports.auth_user = function(req,res,next){
     }
 
 }
+
 exports.index = function(req,res){
     var page = req.query.p?parseInt(req.query.p,10): 1,
         name = req.session.user.name;
@@ -134,33 +134,69 @@ exports.edit = function(req,res){
             });
         }
 }
-exports.del = function(req,res){
+exports.postDel = function(req,res){
+      var id = req.params.postid;
+    Post.del(id,function(err){
 
+    });
 }
 
 
 exports.lab = function(req,res){
-    var data = {
-        title:'实验室',
-        page:1,
-        total:1,
-        isFirstPage:1,
-        isLastPage:1
-    }
-    res.render('admin/lab',data);
+
+    var page = req.query.p?parseInt(req.query.p,10): 1;
+    Lab.page({},page,function(err,labs,total,isFirstPage,isLastPage){
+        var data = {
+            title:'实验室',
+            labs:labs,
+            page:page,
+            total:total,
+            isFirstPage:isFirstPage,
+            isLastPage:isLastPage
+        }
+        if(err){
+            console.log(err);
+            data.posts = [];
+            data.total = 1;
+        }
+        res.render('admin/lab',data);
+    });
 }
 exports.addLab = function(req,res){
-    console.log('add lab');
-    req.form.on('fileBegin',function(){
-        console.log(arguments);
-    });
+    var title ,
+        cat ,
+        des ,
+        files = [];
     req.form.on('progress', function(loaded,total){
-        console.log((loaded/total)*100+'%');
+        //console.log((loaded/total)*100+'%');
+    });
+    req.form.on('abort',function(){
+        console.log('上传中止');
+    });
+    req.form.on('file',function(name,file){
+        files.push({
+            name:file.name,
+            path:file.path,
+            ext:file.path.replace(/.*(\.\w+)/,'$1')
+        });
     });
     req.form.on('end',function(){
-        console.log(req.files);
-        res.send('ok');
+        title = req.body.title;
+        cat = req.body.cat;
+        des = req.body.res;
+        var lab = new Lab(title,cat,des,files);
+        lab.save(function(err){
+           if(err){
+               res.send('{"msg":"失败","ret":-1}');
+           }
+        });
+        res.send('{"msg":"成功","ret":1}');
     });
-    //res.send('ok');
-
+}
+exports.labDel = function(req,res){
+    var id = req.params.labid;
+    Lab.del(id,function(err,result){
+        console.log(err);
+        res.redirect('admin/lab');
+    });
 }

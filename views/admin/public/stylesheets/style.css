@@ -488,6 +488,7 @@ span.line{border-bottom: 4px solid #EA4748;margin-top:-24px;width: 100px;display
 .lab{}
 .pub_pro{background:#EA4748;color:white;padding: 0 5px; }
 .add_pro{position:absolute;top:25%;left:45%;border:1px solid #EA4748;padding: 5px;background: #ffffff;z-index: 100}
+.add_pro textarea{width: 100%}
 
 
 
