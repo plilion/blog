@@ -11,7 +11,7 @@ module.exports = function(app){
     app.get('/',blog.index);
     app.get('/post/:postid',blog.post);
     app.post('/comment',blog.comment);
-//    app.get('/tags/:tag?',blog.tag);
+    app.get('/labs',blog.labs);
 
     app.get('/login',admin.login);
     app.post('/login',admin.login);

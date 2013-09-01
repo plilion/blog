@@ -85,6 +85,11 @@ exports.comment = function(req,res){
        });
 
 }
+exports.labs = function(req,res){
+    res.render(theme+'labs',{
+        title:'实验室'
+    });
+}
 exports.notFound = function(req,res){
     res.render(theme+'404')
 }

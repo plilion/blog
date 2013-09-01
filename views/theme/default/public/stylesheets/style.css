@@ -47,7 +47,7 @@ table {
     border-spacing:0
 }
 /*html5*/
-article, aside, dialog, footer, header, section, footer, nav, figure, menu {
+article, aside, footer, header, section, footer, nav, figure, menu {
     display:block
 }
 #page, #header, #content, #footer {
@@ -567,7 +567,6 @@ span.line {
     margin: 15px 0
 }
 .markdown-body hr {
-    background: transparent url("/assets/primer/markdown/dirty-shade-3d43d541b0f089487a139219bbf0309c6b1f2cd8.png") repeat-x 0 0;
     border: 0 none;
     color: #ccc;
     height: 4px;
@@ -743,3 +742,7 @@ span.line {
     background-color: transparent;
     border: none
 }
+
+/*Labs*/
+.labs{position: relative}
+.labs li{position:absolute;right:0;width:100px;height: 150px;}
